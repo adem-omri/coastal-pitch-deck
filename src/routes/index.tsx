@@ -367,6 +367,8 @@ const reviews = [
   },
 ];
 
+/* ---------------------------------- Nav ---------------------------------- */
+
 function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -381,14 +383,14 @@ function Nav() {
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-background/90 backdrop-blur-md shadow-[0_1px_0_var(--color-border)]"
+          ? "bg-background/90 shadow-[0_1px_0_var(--color-border)] backdrop-blur-md"
           : "bg-transparent"
       }`}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
         <a
           href="#top"
-          className={`font-display text-2xl font-medium tracking-wide transition-colors ${
+          className={`font-display text-2xl italic tracking-wide transition-colors ${
             scrolled ? "text-foreground" : "text-white"
           }`}
         >
@@ -400,7 +402,7 @@ function Nav() {
             <li key={l.href}>
               <a
                 href={l.href}
-                className={`text-xs font-medium uppercase tracking-[0.15em] transition-colors hover:text-gold ${
+                className={`text-[11px] font-medium uppercase tracking-[0.2em] transition-colors hover:text-gold ${
                   scrolled ? "text-muted-foreground" : "text-white/80"
                 }`}
               >
@@ -412,9 +414,9 @@ function Nav() {
 
         <a
           href="tel:+21672295169"
-          className={`hidden rounded-full px-5 py-2 text-xs font-medium uppercase tracking-[0.12em] transition-all lg:inline-block ${
+          className={`hidden px-6 py-2.5 text-[11px] font-medium uppercase tracking-[0.18em] transition-all lg:inline-block ${
             scrolled
-              ? "bg-primary text-primary-foreground hover:bg-sea-deep"
+              ? "bg-primary text-primary-foreground hover:bg-clay"
               : "border border-white/40 text-white hover:bg-white hover:text-sea-deep"
           }`}
         >
@@ -453,7 +455,7 @@ function Nav() {
             <li>
               <a
                 href="tel:+21672295169"
-                className="text-sm font-medium uppercase tracking-[0.12em] text-gold"
+                className="text-sm font-medium uppercase tracking-[0.12em] text-sea"
               >
                 (+216) 72 29 51 69
               </a>
@@ -465,6 +467,8 @@ function Nav() {
   );
 }
 
+/* ------------------------------ Wave divider ------------------------------ */
+
 function Waves({ className = "" }: { className?: string }) {
   return (
     <svg
@@ -474,155 +478,181 @@ function Waves({ className = "" }: { className?: string }) {
       className={className}
     >
       <path
-        d="M0 60c120-30 240-30 360 0s240 30 360 0 240-30 360 0 240 30 360 0v60H0z"
+        d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"
         fill="currentColor"
-        opacity="0.35"
+        opacity="0.4"
       />
       <path
-        d="M0 80c120-24 240-24 360 0s240 24 360 0 240-24 360 0 240 24 360 0v40H0z"
+        d="M0,84L120,78C240,72,480,60,720,64C960,68,1200,88,1320,94L1440,96L1440,120L0,120Z"
         fill="currentColor"
       />
     </svg>
   );
 }
 
+/* ---------------------------------- Hero ---------------------------------- */
+
 function Hero() {
   return (
     <section
       id="top"
-      className="relative flex min-h-screen w-full items-center overflow-hidden bg-sea-deep"
+      className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-sea-deep"
     >
+      {/* Ocean gradient */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(120% 90% at 50% -10%, var(--sea) 0%, var(--sea-deep) 55%, var(--sea-deep) 100%)",
+            "linear-gradient(to bottom, var(--clay) 0%, var(--sea-deep) 60%, oklch(0.22 0.05 243) 100%)",
         }}
       />
+      {/* Grain */}
+      <svg
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.08] mix-blend-overlay"
+      >
+        <filter id="grain">
+          <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="3" stitchTiles="stitch" />
+        </filter>
+        <rect width="100%" height="100%" filter="url(#grain)" />
+      </svg>
+      {/* Giant ghost letter */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 opacity-[0.07]"
-        style={{
-          backgroundImage:
-            "repeating-linear-gradient(115deg, transparent 0 28px, rgba(255,255,255,0.6) 28px 29px)",
-        }}
-      />
+        className="pointer-events-none absolute -right-10 top-1/2 hidden -translate-y-1/2 select-none font-display text-[38rem] italic leading-none text-white/[0.04] lg:block"
+      >
+        M
+      </div>
+      {/* Vertical coordinates */}
+      <div className="absolute left-8 top-1/2 hidden -translate-y-1/2 -rotate-90 items-center gap-4 md:flex">
+        <span className="h-px w-12 bg-white/30" />
+        <span className="whitespace-nowrap text-[10px] font-medium uppercase tracking-[0.4em] text-white/40">
+          36.8474° N — 11.0938° E
+        </span>
+      </div>
 
-      <div className="relative z-10 mx-auto w-full max-w-4xl px-6 py-32 text-center">
-        <p className="animate-fade-up text-xs font-medium uppercase tracking-[0.4em] text-gold">
-          Kélibia · Tunisie · Depuis 1962
+      <div className="relative z-10 mx-auto w-full max-w-5xl px-6 py-32 text-center">
+        <p className="animate-fade-up text-[11px] font-medium uppercase tracking-[0.5em] text-gold">
+          Kélibia — Tunisie — Depuis 1962
         </p>
         <h1
-          className="animate-fade-up mt-6 font-display text-5xl font-light leading-[1.05] text-white sm:text-7xl md:text-8xl"
+          className="animate-fade-up mt-8 font-display text-6xl italic leading-[0.95] text-white sm:text-8xl md:text-9xl"
           style={{ animationDelay: "0.15s" }}
         >
           El Mansourah
         </h1>
-        <div className="gold-rule animate-fade-up mx-auto mt-8 max-w-[220px]" style={{ animationDelay: "0.25s" }} />
+        <div
+          className="animate-fade-up mx-auto mt-10 h-px w-24 bg-white/30"
+          style={{ animationDelay: "0.3s" }}
+        />
         <p
-          className="animate-fade-up mt-8 font-display text-xl font-light italic text-white/85 sm:text-2xl"
-          style={{ animationDelay: "0.35s" }}
+          className="animate-fade-up mx-auto mt-10 max-w-xl font-display text-xl italic text-white/85 sm:text-2xl"
+          style={{ animationDelay: "0.4s" }}
         >
-          La table posée sur les rochers, face à la Méditerranée
+          Une table suspendue entre le ciel et la mer Méditerranée.
         </p>
         <p
-          className="animate-fade-up mx-auto mt-5 max-w-xl text-sm font-light leading-relaxed text-white/65 sm:text-base"
-          style={{ animationDelay: "0.45s" }}
+          className="animate-fade-up mx-auto mt-5 max-w-md text-sm font-light leading-relaxed text-white/60"
+          style={{ animationDelay: "0.5s" }}
         >
-          Poissons de la criée, fruits de mer, spécialités méditerranéennes et accès direct à la
-          mer — à quelques minutes du port de Kélibia.
+          Poissons de la criée, fruits de mer et accès direct à la mer — à quelques minutes du
+          port de Kélibia.
         </p>
         <div
-          className="animate-fade-up mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
-          style={{ animationDelay: "0.55s" }}
+          className="animate-fade-up mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row"
+          style={{ animationDelay: "0.62s" }}
         >
           <a
             href="#carte"
-            className="rounded-full bg-white px-8 py-3 text-xs font-medium uppercase tracking-[0.15em] text-sea-deep transition-colors hover:bg-gold"
+            className="bg-white px-9 py-3.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-sea-deep transition-colors hover:bg-gold"
           >
             Découvrir la carte
           </a>
           <a
             href="tel:+21672295169"
-            className="rounded-full border border-white/50 px-8 py-3 text-xs font-medium uppercase tracking-[0.15em] text-white transition-colors hover:bg-white/10"
+            className="border border-white/40 px-9 py-3.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-white transition-colors hover:bg-white/10"
           >
             (+216) 72 29 51 69
           </a>
         </div>
       </div>
 
-      <Waves className="absolute inset-x-0 bottom-0 h-20 w-full text-background" />
+      {/* Scroll cue */}
+      <div className="absolute bottom-28 left-1/2 z-10 hidden -translate-x-1/2 md:block">
+        <div className="animate-float-slow h-16 w-px bg-gradient-to-b from-white/60 to-transparent" />
+      </div>
+
+      <Waves className="absolute inset-x-0 bottom-0 h-16 w-full text-background md:h-24" />
     </section>
   );
 }
 
-function SectionHeading({
-  eyebrow,
-  title,
-  subtitle,
-}: {
-  eyebrow: string;
-  title: string;
-  subtitle?: string;
-}) {
-  return (
-    <div className="mx-auto max-w-2xl text-center">
-      <p className="text-xs font-medium uppercase tracking-[0.3em] text-gold">{eyebrow}</p>
-      <h2 className="mt-4 font-display text-4xl font-light text-foreground sm:text-5xl">{title}</h2>
-      {subtitle && (
-        <p className="mt-4 text-base font-light leading-relaxed text-muted-foreground">{subtitle}</p>
-      )}
-    </div>
-  );
-}
+/* -------------------------------- La maison ------------------------------- */
 
 function Maison() {
   return (
-    <section id="maison" className="bg-background py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="grid items-center gap-12 md:grid-cols-2 md:gap-20">
-          <div>
-            <p className="text-xs font-medium uppercase tracking-[0.3em] text-gold">La maison</p>
-            <h2 className="mt-4 font-display text-4xl font-light leading-tight text-foreground sm:text-5xl">
+    <section id="maison" className="relative overflow-hidden bg-background py-28 sm:py-36">
+      {/* Ghost letter backdrop */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-10 top-0 select-none font-display text-[20rem] italic leading-none text-sea/[0.05]"
+      >
+        62
+      </div>
+
+      <div className="relative mx-auto max-w-6xl px-6">
+        <div className="grid items-center gap-14 md:grid-cols-2 md:gap-20">
+          <div className="relative">
+            <p className="text-[11px] font-medium uppercase tracking-[0.35em] text-sea">
+              La maison
+            </p>
+            <h2 className="mt-5 font-display text-4xl leading-[1.05] text-foreground sm:text-6xl">
               Sur les rochers,
               <br />
-              au-dessus de la mer
+              <span className="italic text-sea">au-dessus de la mer</span>
             </h2>
-            <div className="mt-8 space-y-5 text-base font-light leading-relaxed text-muted-foreground">
+            <div className="mt-9 space-y-5 text-base font-light leading-relaxed text-muted-foreground">
               <p>
                 Ouvert en 1962, El Mansourah est une institution de la côte de Kélibia. La
                 terrasse s'avance au-dessus de l'eau : de la table, on entend les vagues sur la
-                roche et l'on voit la côte du Cap Bon se dessiner jusqu'à l'horizon.
+                roche et l'on voit le Cap Bon se dessiner jusqu'à l'horizon.
               </p>
               <p>
                 La cuisine suit la mer. Le poisson vient de la criée chaque matin, les crustacés
                 arrivent selon la pêche, et les recettes restent simples : le grill, l'huile
                 d'olive, le citron, les herbes du jardin.
               </p>
-              <p>
-                Un escalier de pierre descend directement dans une petite crique. On se baigne, on
-                remonte, on déjeune longuement — c'est la manière Mansourah.
-              </p>
             </div>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
-            {[
-              { k: "1962", v: "Année d'ouverture" },
-              { k: "1 187", v: "Avis Google" },
-              { k: "100 %", v: "Poisson de la criée" },
-              { k: "Accès", v: "Direct à la mer" },
-            ].map((s) => (
-              <div
-                key={s.k}
-                className="border border-border bg-card p-8 text-center transition-colors hover:border-gold/60"
-              >
-                <p className="font-display text-3xl font-light text-sea">{s.k}</p>
-                <p className="mt-2 text-xs uppercase tracking-[0.14em] text-muted-foreground">
-                  {s.v}
+          {/* Framed "esprit du lieu" panel — broken grid offset */}
+          <div className="relative md:translate-y-10">
+            <div className="absolute -left-4 -top-4 h-full w-full border border-sea/30" />
+            <div className="relative flex aspect-[4/5] items-center justify-center bg-sand/60">
+              <div className="absolute inset-4 border border-sea/20" />
+              <div className="p-12 text-center">
+                <span className="mb-5 block text-[10px] font-medium uppercase tracking-[0.3em] text-sea">
+                  L'esprit du lieu
+                </span>
+                <p className="font-display text-3xl italic leading-snug text-foreground">
+                  La roche,
+                  <br />
+                  le sel, le vent.
+                </p>
+                <div className="gold-rule mx-auto mt-8 w-16" />
+                <p className="mt-8 text-xs font-light leading-relaxed text-muted-foreground">
+                  Un escalier de pierre descend directement dans une petite crique. On se baigne,
+                  on remonte, on déjeune longuement — c'est la manière Mansourah.
                 </p>
               </div>
-            ))}
+            </div>
+            {/* Stat card overlapping the frame */}
+            <div className="absolute -bottom-8 -left-6 bg-primary px-8 py-6 text-primary-foreground shadow-xl md:-left-12">
+              <p className="font-display text-4xl italic">1962</p>
+              <p className="mt-1 text-[10px] font-medium uppercase tracking-[0.2em] opacity-80">
+                Année d'ouverture
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -630,46 +660,56 @@ function Maison() {
   );
 }
 
+/* ------------------------------ L'expérience ------------------------------ */
+
 function Experience() {
   return (
-    <section id="experience" className="relative overflow-hidden bg-sea-deep py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="text-center">
-          <p className="text-xs font-medium uppercase tracking-[0.3em] text-gold">L'expérience</p>
-          <h2 className="mt-4 font-display text-4xl font-light text-white sm:text-5xl">
-            Se baigner. Déjeuner. Prendre son temps.
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-base font-light leading-relaxed text-white/70">
-            Peu de restaurants permettent d'entrer dans la mer entre deux plats. Ici, quelques
-            marches de pierre séparent la terrasse de l'eau claire.
-          </p>
-        </div>
+    <section id="experience" className="relative overflow-hidden bg-sea-deep py-28 sm:py-36">
+      {/* Ghost heading */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-6 left-0 w-full select-none overflow-hidden whitespace-nowrap text-center font-display text-[10rem] italic leading-none text-white/[0.03]"
+      >
+        Baignade — Dégustation — Contemplation
+      </div>
 
-        <div className="mt-16 grid gap-8 md:grid-cols-3">
+      <div className="relative mx-auto max-w-4xl px-6 text-center">
+        <p className="text-[11px] font-medium uppercase tracking-[0.35em] text-gold">
+          L'expérience
+        </p>
+        <h2 className="mt-5 font-display text-4xl italic text-white sm:text-5xl">
+          Se baigner. Déjeuner. Prendre son temps.
+        </h2>
+        <p className="mx-auto mt-5 max-w-xl text-sm font-light leading-relaxed text-white/65">
+          Peu de restaurants permettent d'entrer dans la mer entre deux plats. Ici, quelques
+          marches de pierre séparent la terrasse de l'eau claire.
+        </p>
+
+        <div className="mt-20 grid gap-12 md:grid-cols-3">
           {[
             {
               num: "01",
-              title: "Arriver face au large",
-              text: "On se gare au-dessus des rochers puis l'on descend vers une terrasse suspendue au-dessus de l'eau. La vue arrive avant la carte.",
+              title: "Baignade",
+              text: "Un accès direct aux eaux cristallines pour une immersion totale avant le repas.",
             },
             {
               num: "02",
-              title: "Se baigner",
-              text: "La crique en contrebas reste calme et peu fréquentée, même en pleine saison. On nage, puis l'on revient à table.",
+              title: "Dégustation",
+              text: "Le poisson du jour, sélectionné à l'aube sur les quais du port de Kélibia.",
             },
             {
               num: "03",
-              title: "Rester jusqu'au soir",
-              text: "Poisson frais, vin servi à la bonne température, café à la menthe : l'après-midi glisse doucement vers le coucher du soleil.",
+              title: "Contemplation",
+              text: "Le spectacle permanent du large, du lever du soleil aux reflets lunaires.",
             },
-          ].map((step) => (
-            <div
-              key={step.num}
-              className="border border-white/10 bg-white/[0.04] p-8 backdrop-blur-sm transition-colors hover:bg-white/[0.08]"
-            >
-              <p className="font-display text-5xl font-light text-gold/80">{step.num}</p>
-              <h3 className="mt-4 font-display text-2xl font-medium text-white">{step.title}</h3>
-              <p className="mt-3 text-sm font-light leading-relaxed text-white/65">{step.text}</p>
+          ].map((step, i) => (
+            <div key={step.num} className={i === 1 ? "md:translate-y-10" : ""}>
+              <p className="font-display text-6xl italic text-gold/70">{step.num}</p>
+              <div className="mx-auto mt-4 h-px w-10 bg-gold/40" />
+              <h3 className="mt-5 text-xs font-semibold uppercase tracking-[0.25em] text-white">
+                {step.title}
+              </h3>
+              <p className="mt-3 text-sm font-light leading-relaxed text-white/60">{step.text}</p>
             </div>
           ))}
         </div>
@@ -678,21 +718,29 @@ function Experience() {
   );
 }
 
+/* --------------------------------- La carte -------------------------------- */
+
 function MenuList({ sections }: { sections: Section[] }) {
   return (
-    <div className="mt-14 grid gap-x-16 gap-y-14 md:grid-cols-2">
-      {sections.map((sec) => (
-        <div key={sec.title} className="break-inside-avoid">
-          <h3 className="font-display text-2xl font-medium text-sea">{sec.title}</h3>
-          <div className="gold-rule mt-3" />
-          <ul className="mt-5 space-y-4">
+    <div className="mt-16 grid gap-x-20 gap-y-16 md:grid-cols-2">
+      {sections.map((sec, i) => (
+        <div key={sec.title} className={i % 2 === 1 ? "md:translate-y-8" : ""}>
+          <div className="flex items-baseline justify-between gap-4">
+            <h3 className="font-display text-3xl italic text-foreground">{sec.title}</h3>
+            <span className="h-px flex-1 bg-sea/25" />
+          </div>
+          <ul className="mt-7 space-y-5">
             {sec.items.map((item) => (
-              <li key={item.name} className="flex items-baseline gap-3">
-                <span className="text-sm font-light leading-snug text-foreground">{item.name}</span>
-                <span className="mt-2 h-px flex-1 border-b border-dotted border-border" />
-                <span className="shrink-0 text-sm font-medium tabular-nums text-muted-foreground">
-                  {item.price}
-                </span>
+              <li key={item.name} className="group">
+                <div className="flex items-baseline justify-between gap-4">
+                  <span className="font-display text-lg leading-snug text-foreground transition-colors group-hover:text-sea">
+                    {item.name}
+                  </span>
+                  <span className="shrink-0 text-sm font-light tabular-nums text-muted-foreground">
+                    {item.price}
+                  </span>
+                </div>
+                <div className="mt-2 h-px w-full bg-border transition-colors group-hover:bg-sea/30" />
               </li>
             ))}
           </ul>
@@ -706,38 +754,45 @@ function Carte() {
   const [tab, setTab] = useState<"plats" | "boissons">("plats");
 
   return (
-    <section id="carte" className="bg-sand/40 py-24 sm:py-32">
-      <div className="mx-auto max-w-6xl px-6">
-        <SectionHeading
-          eyebrow="La carte"
-          title="Notre carte"
-          subtitle="Prix en millimes tunisiens. La carte évolue avec la pêche et les saisons."
-        />
+    <section id="carte" className="bg-background py-28 sm:py-36">
+      <div className="mx-auto max-w-5xl px-6">
+        <div className="text-center">
+          <p className="text-[11px] font-medium uppercase tracking-[0.35em] text-sea">La carte</p>
+          <h2 className="mt-5 font-display text-5xl text-foreground sm:text-6xl">
+            Notre <span className="italic text-sea">carte</span>
+          </h2>
+          <p className="mx-auto mt-5 max-w-md text-sm font-light leading-relaxed text-muted-foreground">
+            Prix en millimes tunisiens. La carte évolue avec la pêche et les saisons.
+          </p>
 
-        <div className="mt-10 flex justify-center gap-2">
-          {(
-            [
-              ["plats", "Les plats"],
-              ["boissons", "Les boissons"],
-            ] as const
-          ).map(([key, label]) => (
-            <button
-              key={key}
-              onClick={() => setTab(key)}
-              className={`rounded-full px-6 py-2 text-xs font-medium uppercase tracking-[0.14em] transition-colors ${
-                tab === key
-                  ? "bg-primary text-primary-foreground"
-                  : "border border-border text-muted-foreground hover:border-gold hover:text-foreground"
-              }`}
-            >
-              {label}
-            </button>
-          ))}
+          <div className="mt-10 flex justify-center gap-8 text-[11px] font-semibold uppercase tracking-[0.22em]">
+            {(
+              [
+                ["plats", "Les plats"],
+                ["boissons", "Les boissons"],
+              ] as const
+            ).map(([key, label]) => (
+              <button
+                key={key}
+                onClick={() => setTab(key)}
+                className={`pb-2 transition-all ${
+                  tab === key
+                    ? "border-b-2 border-sea text-sea"
+                    : "text-muted-foreground/60 hover:text-foreground"
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
         </div>
 
         <MenuList sections={tab === "plats" ? foodSections : drinkSections} />
 
-        <div className="mt-16 border border-border bg-card p-8 text-center">
+        <div className="relative mt-20 border border-border bg-sand/40 p-8 text-center sm:p-10">
+          <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-background px-4 text-[10px] font-semibold uppercase tracking-[0.25em] text-sea">
+            Bon à savoir
+          </div>
           <p className="text-sm font-light leading-relaxed text-muted-foreground">
             <span className="font-medium text-foreground">Les p'tits dans l'eau — NB :</span> toute
             commande d'entrées, de boissons ou de desserts doit être accompagnée d'une commande
@@ -753,43 +808,72 @@ function Carte() {
   );
 }
 
+/* ---------------------------------- Les vins ------------------------------- */
+
 function Vins() {
   return (
-    <section id="vins" className="bg-background py-24 sm:py-32">
-      <div className="mx-auto max-w-6xl px-6">
-        <SectionHeading
-          eyebrow="La cave"
-          title="Vins & champagnes"
-          subtitle="Une sélection de crus tunisiens du Cap Bon et de grandes maisons internationales."
-        />
+    <section id="vins" className="relative overflow-hidden bg-sand/50 py-28 sm:py-36">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-8 bottom-0 select-none font-display text-[16rem] italic leading-none text-sea/[0.05]"
+      >
+        Cave
+      </div>
+      <div className="relative mx-auto max-w-5xl px-6">
+        <div className="text-center">
+          <p className="text-[11px] font-medium uppercase tracking-[0.35em] text-sea">La cave</p>
+          <h2 className="mt-5 font-display text-5xl text-foreground sm:text-6xl">
+            Vins <span className="italic text-sea">&amp; champagnes</span>
+          </h2>
+          <p className="mx-auto mt-5 max-w-md text-sm font-light leading-relaxed text-muted-foreground">
+            Une sélection de crus tunisiens du Cap Bon et de grandes maisons internationales.
+          </p>
+        </div>
         <MenuList sections={wineSections} />
       </div>
     </section>
   );
 }
 
-function Avis() {
-  return (
-    <section id="avis" className="bg-sand/40 py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading
-          eyebrow="Ils sont venus"
-          title="Ce que disent nos hôtes"
-          subtitle="Une sélection parmi plus de mille avis publiés sur Google Maps."
-        />
+/* ----------------------------------- Avis ---------------------------------- */
 
-        <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {reviews.map((r, i) => (
+function Avis() {
+  const featured = reviews[0];
+  const rest = reviews.slice(1);
+
+  return (
+    <section id="avis" className="bg-background py-28 sm:py-36">
+      <div className="mx-auto max-w-6xl px-6">
+        {/* Featured editorial quote */}
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="text-[11px] font-medium uppercase tracking-[0.35em] text-sea">
+            Ils sont venus
+          </p>
+          <div className="mt-8 flex justify-center gap-1.5">
+            {[0, 1, 2].map((i) => (
+              <div key={i} className="h-1.5 w-1.5 rounded-full bg-sea" />
+            ))}
+          </div>
+          <blockquote className="mt-8 font-display text-2xl italic leading-relaxed text-foreground sm:text-3xl">
+            «&nbsp;{featured.quote}&nbsp;»
+          </blockquote>
+          <p className="mt-7 text-[11px] font-semibold uppercase tracking-[0.25em] text-muted-foreground">
+            — {featured.author} · {featured.detail}
+          </p>
+        </div>
+
+        <div className="mt-20 grid gap-px border border-border bg-border sm:grid-cols-2 lg:grid-cols-5">
+          {rest.map((r, i) => (
             <figure
               key={i}
-              className="flex flex-col justify-between border border-border bg-card p-8 transition-colors hover:border-gold/50"
+              className="flex flex-col justify-between bg-background p-7 transition-colors hover:bg-sand/40"
             >
-              <blockquote className="font-display text-lg font-light italic leading-relaxed text-foreground">
+              <blockquote className="text-sm font-light leading-relaxed text-muted-foreground">
                 «&nbsp;{r.quote}&nbsp;»
               </blockquote>
               <figcaption className="mt-6">
-                <p className="text-sm font-medium text-sea">{r.author}</p>
-                <p className="mt-1 text-xs uppercase tracking-[0.1em] text-muted-foreground">
+                <p className="font-display text-base italic text-foreground">{r.author}</p>
+                <p className="mt-1 text-[10px] uppercase tracking-[0.15em] text-muted-foreground">
                   {r.detail}
                 </p>
               </figcaption>
@@ -797,14 +881,14 @@ function Avis() {
           ))}
         </div>
 
-        <div className="mt-14 text-center">
+        <div className="mt-12 text-center">
           <a
             href={MAPS_URL}
             target="_blank"
             rel="noreferrer"
-            className="text-xs font-medium uppercase tracking-[0.15em] text-sea underline-offset-4 hover:text-gold hover:underline"
+            className="text-[11px] font-semibold uppercase tracking-[0.2em] text-sea underline-offset-4 hover:underline"
           >
-            Lire tous les avis sur Google Maps
+            Lire les 1 187 avis sur Google Maps
           </a>
         </div>
       </div>
@@ -812,97 +896,93 @@ function Avis() {
   );
 }
 
+/* -------------------------------- Nous trouver ----------------------------- */
+
 function Visite() {
   return (
-    <section id="visite" className="bg-background py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="grid gap-12 md:grid-cols-2 md:gap-20">
+    <section id="visite" className="bg-sand/50 py-28 sm:py-36">
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="grid gap-16 md:grid-cols-2 md:gap-20">
           <div>
-            <p className="text-xs font-medium uppercase tracking-[0.3em] text-gold">Nous trouver</p>
-            <h2 className="mt-4 font-display text-4xl font-light text-foreground sm:text-5xl">
-              Sur la route côtière de Kélibia
+            <p className="text-[11px] font-medium uppercase tracking-[0.35em] text-sea">
+              Nous trouver
+            </p>
+            <h2 className="mt-5 font-display text-4xl leading-[1.05] text-foreground sm:text-5xl">
+              Sur la route côtière
+              <br />
+              <span className="italic text-sea">de Kélibia</span>
             </h2>
-            <p className="mt-6 text-base font-light leading-relaxed text-muted-foreground">
+            <p className="mt-7 max-w-md text-sm font-light leading-relaxed text-muted-foreground">
               El Mansourah se trouve sur la côte de Kélibia, dans la presqu'île du Cap Bon, au
               nord-est de la Tunisie. Cherchez la terrasse au-dessus de l'eau — on entend la mer
               avant de voir l'enseigne.
             </p>
 
-            <dl className="mt-10 space-y-6">
-              <div className="flex gap-4">
-                <dt className="w-28 shrink-0 text-xs font-medium uppercase tracking-[0.12em] text-gold">
-                  Adresse
-                </dt>
-                <dd className="text-sm font-light text-foreground">
-                  Route de la corniche, Mansourah, Kélibia, Cap Bon, Tunisie
-                </dd>
-              </div>
-              <div className="flex gap-4">
-                <dt className="w-28 shrink-0 text-xs font-medium uppercase tracking-[0.12em] text-gold">
-                  Téléphone
-                </dt>
-                <dd className="text-sm font-light text-foreground">
-                  <a href="tel:+21672295169" className="hover:text-sea">
-                    (+216) 72 29 51 69
-                  </a>
-                </dd>
-              </div>
-              <div className="flex gap-4">
-                <dt className="w-28 shrink-0 text-xs font-medium uppercase tracking-[0.12em] text-gold">
-                  E-mail
-                </dt>
-                <dd className="text-sm font-light text-foreground">
-                  <a href="mailto:restaurantelmansourah@gmail.com" className="hover:text-sea">
-                    restaurantelmansourah@gmail.com
-                  </a>
-                </dd>
-              </div>
-              <div className="flex gap-4">
-                <dt className="w-28 shrink-0 text-xs font-medium uppercase tracking-[0.12em] text-gold">
-                  Réseaux
-                </dt>
-                <dd className="text-sm font-light text-foreground">
-                  Facebook : Restaurant El Mansourah Kelibia
-                  <br />
-                  Instagram : @restaurant_el_mansourah
-                </dd>
-              </div>
-              <div className="flex gap-4">
-                <dt className="w-28 shrink-0 text-xs font-medium uppercase tracking-[0.12em] text-gold">
-                  Cuisine
-                </dt>
-                <dd className="text-sm font-light text-foreground">
-                  Poissons, fruits de mer et spécialités méditerranéennes
-                </dd>
-              </div>
+            <dl className="mt-12 space-y-7">
+              {[
+                {
+                  k: "Adresse",
+                  v: "Route de la corniche, Mansourah, Kélibia, Cap Bon, Tunisie",
+                },
+                { k: "Téléphone", v: "(+216) 72 29 51 69", href: "tel:+21672295169" },
+                {
+                  k: "E-mail",
+                  v: "restaurantelmansourah@gmail.com",
+                  href: "mailto:restaurantelmansourah@gmail.com",
+                },
+                {
+                  k: "Réseaux",
+                  v: "Facebook : Restaurant El Mansourah Kelibia — Instagram : @restaurant_el_mansourah",
+                },
+                { k: "Cuisine", v: "Poissons, fruits de mer et spécialités méditerranéennes" },
+              ].map((row) => (
+                <div key={row.k} className="flex gap-6">
+                  <dt className="w-24 shrink-0 pt-0.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-sea">
+                    {row.k}
+                  </dt>
+                  <dd className="text-sm font-light leading-relaxed text-foreground">
+                    {row.href ? (
+                      <a href={row.href} className="hover:text-sea">
+                        {row.v}
+                      </a>
+                    ) : (
+                      row.v
+                    )}
+                  </dd>
+                </div>
+              ))}
             </dl>
 
-            <div className="mt-10 flex flex-wrap gap-4">
+            <div className="mt-12 flex flex-wrap gap-4">
               <a
                 href={MAPS_URL}
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-full bg-primary px-7 py-3 text-xs font-medium uppercase tracking-[0.15em] text-primary-foreground transition-colors hover:bg-sea-deep"
+                className="bg-primary px-8 py-3.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-primary-foreground transition-colors hover:bg-clay"
               >
                 Itinéraire Google Maps
               </a>
               <a
                 href="tel:+21672295169"
-                className="rounded-full border border-border px-7 py-3 text-xs font-medium uppercase tracking-[0.15em] text-foreground transition-colors hover:border-gold"
+                className="border border-foreground/20 px-8 py-3.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground transition-colors hover:border-sea hover:text-sea"
               >
-                Réserver par téléphone
+                Appeler
               </a>
             </div>
           </div>
 
-          <div className="min-h-[420px] overflow-hidden border border-border bg-muted">
-            <iframe
-              title="Carte — Restaurant El Mansourah, Kélibia"
-              src="https://www.google.com/maps?q=Restaurant%20El%20Mansourah%20Kelibia&output=embed"
-              className="h-full min-h-[420px] w-full"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
+          {/* Map panel */}
+          <div className="relative md:-translate-y-6">
+            <div className="absolute -right-4 -top-4 h-full w-full border border-sea/30" />
+            <div className="relative h-full min-h-[420px] overflow-hidden border border-border bg-card">
+              <iframe
+                title="Carte — Restaurant El Mansourah, Kélibia"
+                src="https://www.google.com/maps?q=Restaurant+El+Mansourah+K%C3%A9libia+Tunisie&output=embed"
+                className="absolute inset-0 h-full w-full"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -910,42 +990,53 @@ function Visite() {
   );
 }
 
+/* ---------------------------------- Footer --------------------------------- */
+
 function Footer() {
   return (
-    <footer className="relative bg-sea-deep pt-16 pb-10 text-white/70">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="flex flex-col items-center justify-between gap-8 md:flex-row">
-          <div className="text-center md:text-left">
-            <p className="font-display text-3xl font-light text-white">El Mansourah</p>
-            <p className="mt-2 text-xs uppercase tracking-[0.15em] text-white/50">
-              Depuis 1962 · Kélibia · Tunisie
+    <footer className="relative overflow-hidden bg-sea-deep py-20 text-white">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-24 left-1/2 -translate-x-1/2 select-none whitespace-nowrap font-display text-[12rem] italic leading-none text-white/[0.04]"
+      >
+        El Mansourah
+      </div>
+      <div className="relative mx-auto max-w-6xl px-6">
+        <div className="flex flex-col items-start justify-between gap-10 md:flex-row md:items-center">
+          <div>
+            <p className="font-display text-3xl italic">El Mansourah</p>
+            <p className="mt-2 text-[11px] font-light uppercase tracking-[0.3em] text-white/50">
+              Kélibia · Cap Bon · Depuis 1962
             </p>
           </div>
-          <div className="flex flex-wrap justify-center gap-6 text-xs uppercase tracking-[0.12em]">
+          <nav className="flex flex-wrap gap-x-8 gap-y-3">
             {navLinks.map((l) => (
-              <a key={l.href} href={l.href} className="transition-colors hover:text-gold">
+              <a
+                key={l.href}
+                href={l.href}
+                className="text-[11px] font-medium uppercase tracking-[0.2em] text-white/60 transition-colors hover:text-gold"
+              >
                 {l.label}
               </a>
             ))}
-          </div>
+          </nav>
         </div>
-        <div className="mt-12 flex flex-col items-center gap-3 border-t border-white/10 pt-6 text-center text-xs font-light text-white/45">
-          <p>
-            (+216) 72 29 51 69 · restaurantelmansourah@gmail.com ·{" "}
-            <a href={MAPS_URL} target="_blank" rel="noreferrer" className="hover:text-gold">
-              Google Maps
-            </a>
-          </p>
-          <p>© {new Date().getFullYear()} Restaurant El Mansourah. Tous droits réservés.</p>
+        <div className="mt-14 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-8 text-[11px] font-light uppercase tracking-[0.15em] text-white/40 md:flex-row md:items-center">
+          <p>© {new Date().getFullYear()} Restaurant El Mansourah — Tous droits réservés</p>
+          <a href="tel:+21672295169" className="hover:text-gold">
+            (+216) 72 29 51 69
+          </a>
         </div>
       </div>
     </footer>
   );
 }
 
+/* ---------------------------------- Page ----------------------------------- */
+
 function Index() {
   return (
-    <div className="bg-background">
+    <main className="bg-background font-body text-foreground">
       <Nav />
       <Hero />
       <Maison />
@@ -955,6 +1046,6 @@ function Index() {
       <Avis />
       <Visite />
       <Footer />
-    </div>
+    </main>
   );
 }
